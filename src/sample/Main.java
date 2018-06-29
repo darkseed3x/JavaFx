@@ -1,7 +1,10 @@
 package sample;
 
 import javafx.application.Application;
+import javafx.collections.ObservableSet;
 import javafx.geometry.Insets;
+import javafx.print.Printer;
+import javafx.print.PrinterJob;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
 import javafx.scene.control.MenuBar;
@@ -15,8 +18,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import java.awt.*;
-import java.io.File;
-import java.io.IOException;
+import java.io.*;
 
 public class Main extends Application {
     private final Desktop desktop = Desktop.getDesktop();
@@ -27,7 +29,9 @@ public class Main extends Application {
         BorderPane bPane = new BorderPane();
         MenuBar menu = new MenuBar();
         menu.setPadding(Insets.EMPTY);
-
+        StackPane stackPane = new StackPane();
+        TextArea textArea = new TextArea();
+        stackPane.getChildren().addAll(textArea);
 
         Menu menuFile = new Menu("Файл");
 
@@ -49,12 +53,14 @@ public class Main extends Application {
             );
 
             File file = fileChooser.showOpenDialog(new Stage());
-            if (file != null) {
-                try {
-                    desktop.open(file);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+            try(FileInputStream bf = new FileInputStream(file)){
+                byte[] buffer = new byte[bf.available()];
+                bf.read(buffer);
+                String  s = new String(buffer,"Windows-1251");
+                textArea.setText(s);
+            }
+            catch (Exception e){
+                System.exit(0);
             }
 
         });
@@ -71,7 +77,12 @@ public class Main extends Application {
 
         MenuItem itemPrint = new MenuItem("Печать...");
         itemPrint.setAccelerator(KeyCombination.keyCombination("Ctrl+P"));
-        itemPrint.setOnAction((event)->System.exit(0));
+        itemPrint.setOnAction((event)-> {
+            PrinterJob job = PrinterJob.createPrinterJob();
+            if(job == null)
+                return;
+            boolean proceed = job.showPrintDialog(new Stage());
+        });
 
         MenuItem itemExit = new MenuItem("Выход");
         itemExit.setOnAction((event)->System.exit(0));
@@ -161,9 +172,7 @@ public class Main extends Application {
 
         bPane.setTop(menu);
 
-        StackPane stackPane = new StackPane();
-        javafx.scene.control.TextArea textArea = new TextArea();
-        stackPane.getChildren().addAll(textArea);
+
         bPane.setCenter(stackPane);
 
 
