@@ -1,9 +1,7 @@
 package sample;
 
 import javafx.application.Application;
-import javafx.collections.ObservableSet;
 import javafx.geometry.Insets;
-import javafx.print.Printer;
 import javafx.print.PrinterJob;
 import javafx.scene.Scene;
 import javafx.scene.control.Menu;
@@ -16,12 +14,10 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
-
-import java.awt.*;
 import java.io.*;
 
 public class Main extends Application {
-    private final Desktop desktop = Desktop.getDesktop();
+
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -38,7 +34,7 @@ public class Main extends Application {
 
         MenuItem itemCreate = new MenuItem("Создать");
         itemCreate.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
-        itemCreate.setOnAction((event)->{
+        itemCreate.setOnAction((event)-> {
             textArea.setText("");
         });
 
@@ -83,7 +79,6 @@ public class Main extends Application {
             PrinterJob job = PrinterJob.createPrinterJob();
             if(job == null)
                 return;
-            boolean proceed = job.showPrintDialog(new Stage());
         });
 
         MenuItem itemExit = new MenuItem("Выход");
