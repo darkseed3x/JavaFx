@@ -1,0 +1,20 @@
+<component name="ArtifactManager">
+  <artifact type="javafx" name="wordpad">
+    <output-path>$PROJECT_DIR$/out/artifacts/wordpad</output-path>
+    <properties id="javafx-properties">
+      <options>
+        <option name="appClass" value="sample.Main" />
+        <option name="description" value="blabla" />
+        <option name="htmlPlaceholderId" value="" />
+        <option name="title" value="Wordpad" />
+        <option name="vendor" value="boster_gold" />
+        <option name="version" value="0.001" />
+      </options>
+    </properties>
+    <root id="root">
+      <element id="archive" name="wordpad.jar">
+        <element id="module-output" name="wordpad" />
+      </element>
+    </root>
+  </artifact>
+</component>
