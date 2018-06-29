@@ -38,7 +38,9 @@ public class Main extends Application {
 
         MenuItem itemCreate = new MenuItem("Создать");
         itemCreate.setAccelerator(KeyCombination.keyCombination("Ctrl+N"));
-        itemCreate.setOnAction((event)->System.exit(0));
+        itemCreate.setOnAction((event)->{
+            textArea.setText("");
+        });
 
         MenuItem itemOpen = new MenuItem("Открыть...");
 
