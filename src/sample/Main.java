@@ -111,15 +111,15 @@ public class Main extends Application {
         itemPrint.setAccelerator(KeyCombination.keyCombination("Ctrl+P"));
         itemPrint.setOnAction((event)-> {
             Printer printer = Printer.getDefaultPrinter();
-            PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
+            PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.EQUAL_OPPOSITES);
             double scaleX = pageLayout.getPrintableWidth() / textArea.getBoundsInParent().getWidth();
             double scaleY = pageLayout.getPrintableHeight() / textArea.getBoundsInParent().getHeight();
             textArea.getTransforms().add(new Scale(scaleX, scaleY));
 
-            PrinterJob job = PrinterJob.createPrinterJob();
 
-            if (job != null) {
-                boolean success = job.showPrintDialog(primaryStage);
+            PrinterJob job = PrinterJob.createPrinterJob();
+            if (job != null && job.showPrintDialog(primaryStage.getScene().getWindow())){
+                boolean success = job.printPage(textArea);
                 if (success) {
                     job.endJob();
                 }
